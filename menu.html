@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+<meta charset="UTF-8">
+<title>Κονσέρβα παραδοσιακό καφενείο</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&display=swap" rel="stylesheet"> 
+
+<style>
+
+body {
+    margin: 0;
+    background-color: #f5f5f5; 
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    padding-top: 110px; 
+}
+
+.main-nav {
+    list-style: none; margin: 0; padding: 0;
+    background-color: #ffffffd2; 
+    display: flex; justify-content: center; align-items: center;
+    height: 100px; gap: 20px;
+    position: fixed; top: 0; left: 0; width: 100%; z-index: 1000; 
+    color: #097a41d8; font-weight: bold; font-size: 17px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+.main-nav li { position: relative; }
+.main-nav li:first-child { position: absolute; left: 20px; }
+
+.main-nav li a {
+    display: flex; align-items: center; justify-content: center;
+    width: 110px; height: 50px; color: #097a41d8; 
+    padding: 0 16px; font-weight: bold; text-decoration: none;
+    border-radius: 7px; cursor: pointer; transition: 0.3s; font-size: 17px;
+}
+
+.main-nav li a:hover { font-size: 18px; color:#065e32; }
+.logo-text:hover{
+    transition: 0.15s;
+    font-size: 40px;
+    color:#065f33;
+}
+.logo-text-group { display: flex; flex-direction: column; justify-content: center; align-items: flex-start; margin-left: 10px; }
+.logo-text { transition: 0.15s; font-family: 'Trebuchet MS', sans-serif; font-size: 38px; font-weight: 700; color: #087a41; line-height: 1; }
+.logo-textq { font-family: 'Trebuchet MS', sans-serif; font-size: 14px; color: #065e32; margin-top: 3px; }
+
+.dropdown span { font-size: 16px; height: 50px; width: 110px; display: flex; justify-content: center; align-items: center; cursor: pointer; }
+.arrow { display: inline-block; color: #065e32; transition: 0.5s ease; margin-left: 5px; }
+.dropdown.active .arrow { transform: rotate(180deg); }
+.dropdown-content {
+    opacity: 0; visibility: hidden; position: absolute; top: 100%;
+    background-color: #f9f9f9; min-width: 110px; box-shadow: 0px 8px 16px rgba(0,0,0,0.2); 
+    z-index: 60; border-radius: 5px; transform-origin: top;
+    transform: perspective(1000px) rotateX(-90deg); transition: 0.5s;
+}
+.dropdown.active .dropdown-content { opacity: 1; visibility: visible; transform: perspective(1000px) rotateX(0deg); }
+.dropdown-content a { display: block; padding: 8px 12px; font-size: 14px; color: #097a41d8; text-decoration: none; }
+
+
+.book-container {
+    position: relative;
+    width: 480px;
+    height: 700px;
+    margin: 40px auto;
+    perspective: 2000px;
+}
+
+.book {
+    position: relative;
+    width: 100%; height: 100%;
+    transform-style: preserve-3d;
+}
+
+.page {
+    position: absolute;
+    width: 100%; height: 100%;
+    top: 0; left: 0;
+    background-color: white;
+    transform-origin: left;
+    transition: transform 1.2s cubic-bezier(0.645, 0.045, 0.355, 1);
+    backface-visibility: hidden;
+    box-sizing: border-box;
+    border: 1px solid #ddd;
+    padding: 30px;
+    overflow-y: auto;
+}
+
+.flipped { transform: rotateY(-170deg); }
+
+h2 {
+    background: #cbd4ce; padding: 5px 15px; font-size: 16px;
+    text-align: center; margin: 15px 0 8px 0; color: #333; border-radius: 2px;
+}
+
+.item { display: flex; justify-content: space-between; font-size: 14px; margin-bottom: 2px; border-bottom: 1px dotted #ccc; align-items: flex-end;}
+.item span:first-child { text-align: left; padding-right: 10px; }
+.item span:last-child { white-space: nowrap; font-weight: bold; }
+.sub-info { font-size: 11px; color: #666; font-style: italic; margin-bottom: 8px; text-align: left;}
+
+.green-footer {
+   position: absolute;
+   bottom: 0;
+   left: 0;
+   width: 100%;
+   background-color: #076435; color: white; padding: 15px 0;
+   text-align: center; font-size: 13px;
+}
+
+.book-controls { text-align: center; margin-top: 10px; padding-bottom: 60px; }
+.arrow-btn { background: none; border: none; color: #087a41; font-size: 40px; cursor: pointer; margin: 0 30px; transition: 0.3s; }
+.arrow-btn:hover { color: #065e32; transform: scale(1.2); }
+.arrow-btn:disabled { color: #ccc; cursor: not-allowed; }
+
+@media (max-width: 768px) { .book-container { width: 95%; height: 650px; } }
+</style>
+</head>
+<body>
+
+<ul class="main-nav">
+    <li>
+        <a href="Αρχική σελίδα.html" class="logo-link">
+            <div class="logo-text-group">
+                <span class="logo-text">Κονσέρβα</span>
+                <span class="logo-textq">παραδοσιακό καφενείο</span>
+            </div>
+        </a>
+    </li>
+    <li><a href="Αρχική σελίδα.html">Home</a></li>
+    <li class="dropdown" id="menu-dropdown">
+        <span>Menu <span class="arrow">▼</span></span>
+        <div class="dropdown-content">
+            <a href="menu.html">Menu Gr</a>
+            <a href="menu en.html">Menu En</a>
+          
+        </div>
+    </li>
+    <li><a href="Επικοινωνίστε μαζί μας.html">Επικοινωνία</a></li>
+    <li><a href="Σχετικά με εμας.html">Σχετικά με εμάς</a></li>
+</ul>
+
+<div class="book-container">
+  <div class="book">
+    
+    <div class="page" id="back-cover">
+        <div style="height: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding-bottom: 60px;">
+            <img src="no5.png" alt="Logo" style="max-width: 150px; margin-bottom: 20px;">
+            <h1 style="color: #087a41; font-family: 'Trebuchet MS', sans-serif; font-size: 30px; margin:0;">Κονσέρβα</h1>
+            <p style="font-style: italic; color: #065e32; margin:0;">παραδοσιακό καφενείο</p>
+        </div>
+        <div class="green-footer">© 2025 Κονσέρβα Παραδοσιακό Καφενείο. <br> Μεγαλόβρυσο Αγιάς, Λάρισα</div>
+    </div>
+
+    <div class="page" id="page2">
+        <h2>Τσίπουρο - Ούζο</h2>
+        <div class="item"><span>Τσίπουρο χύμα</span><span>5,00</span></div>
+        <div class="item"><span>Τσίπουρο εμφιαλωμένο</span><span>6,00</span></div>
+        <div class="sub-info">(Οινοποιείο Τυρνάβου / Ηδωνικό)</div>
+        <div class="item"><span>Ούζο εμφιαλωμένο</span><span>6,00</span></div>
+
+        <h2>Ποτά</h2>
+        <div class="item"><span>Ποτό απλό</span><span>6,00</span></div>
+        <div class="item"><span>Ποτό special</span><span>7,00</span></div>
+        <div class="item"><span>Cocktail</span><span>7,00</span></div>
+        <div class="item"><span>Αφρώδης Οίνος</span><span>6,00</span></div>
+
+        <h2>Γλυκά</h2>
+        <div class="item"><span>Γλυκό κουταλιού</span><span>2,50</span></div>
+        <div class="item"><span>Γλυκό ταψιού</span><span>4,00</span></div>
+        <div class="item"><span>Pancake</span><span>4,00</span></div>
+        <div class="sub-info">(+1€ μπάλα παγωτού)</div>
+        <div class="item"><span>Παγωτό</span><span>2,00</span></div>
+        <div class="sub-info">(+1€ extra μπάλα)</div>
+        <div class="item"><span>Βανίλια Υποβρύχιο</span><span>1,50</span></div>
+
+        <h2>Snack</h2>
+        <div class="item"><span>Τοστ</span><span>2,00</span></div>
+        <div class="item"><span>Μπαγκέτα</span><span>2,50</span></div>
+    </div>
+
+    <div class="page" id="page1">
+        <h2>Καφέδες - Ροφήματα</h2>
+        <div class="item"><span>Ελληνικός μονός / διπλός</span><span>2,00 / 2,50</span></div>
+        <div class="item"><span>Nescafe / Frappe</span><span>2,30</span></div>
+        <div class="item"><span>Espresso μονό / διπλό</span><span>2,30 / 2,80</span></div>
+        <div class="item"><span>Cappuccino μονό / διπλό</span><span>2,80 / 3,00</span></div>
+        <div class="item"><span>Americana μονό / διπλό</span><span>2,30 / 2,80</span></div>
+        <div class="item"><span>Freddo Espresso</span><span>2,80</span></div>
+        <div class="item"><span>Freddo Cappuccino</span><span>2,80</span></div>
+        <div class="item"><span>Σοκολάτα</span><span>2,80</span></div>
+        <div class="item"><span>Ζεστό τσάι</span><span>2,50</span></div>
+
+        <h2>Αναψυκτικά</h2>
+        <div class="item"><span>Coca - cola (Zero / Regular)</span><span>2,00</span></div>
+        <div class="item"><span>Fanta (Πορτοκάλι / Λεμόνι)</span><span>2,00</span></div>
+        <div class="item"><span>Schweppes (Σόδα / Grapefruit)</span><span>2,00</span></div>
+        <div class="item"><span>Χυμός (Πορτοκάλι / Βύσσινο)</span><span>2,00</span></div>
+        <div class="item"><span>Ροδάκινο / Ανάμεικτος</span><span>2,00</span></div>
+
+        <h2>Μπύρες</h2>
+        <div class="item"><span>Μπύρα 500ml</span><span>4,00</span></div>
+        <div class="sub-info">(Άλφα / Αμστελ / Μάμος / Χωρίς)</div>
+        <div class="item"><span>Μπύρα 330ml (Corona)</span><span>5,00</span></div>
+        <div class="item"><span>Μπύρα 330ml (Radler)</span><span>3,50</span></div>
+
+        <h2>Κρασιά</h2>
+        <div class="item"><span>Κρασί χύμα</span><span>5,00</span></div>
+        <div class="sub-info">(Λευκό / Ροζέ / Κόκκινο)</div>
+        <div class="item"><span>Κρασί εμφιαλωμένο</span><span>5,00</span></div>
+        <div class="sub-info">(Αρετή / Ρετσίνα)</div>
+    </div>
+
+    <div class="page" id="cover">
+        <div style="height: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center;">
+            <img src="no5.png" alt="Logo" style="max-width: 200px; margin-bottom: 20px;">
+            <h1 style="color: #087a41; font-family: 'Trebuchet MS', sans-serif; font-size: 35px; margin:0;">Κονσέρβα</h1>
+            <p style="font-style: italic; color: #065e32; margin:0;">παραδοσιακό καφενείο</p>
+        </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="book-controls">
+    <button class="arrow-btn" id="prev-btn" disabled><i class="fa fa-chevron-left"></i></button>
+    <button class="arrow-btn" id="next-btn"><i class="fa fa-chevron-right"></i></button>
+</div>
+
+<script>
+const dropdown = document.getElementById('menu-dropdown');
+const dropdownBtn = dropdown.querySelector('span');
+dropdownBtn.addEventListener('click', (e) => { e.stopPropagation(); dropdown.classList.toggle('active'); });
+window.addEventListener('click', () => dropdown.classList.remove('active'));
+
+const nextBtn = document.getElementById('next-btn');
+const prevBtn = document.getElementById('prev-btn');
+const pages = [document.getElementById('cover'), document.getElementById('page1'), document.getElementById('page2')];
+let currentPage = 0;
+
+nextBtn.addEventListener('click', () => {
+    if (currentPage < pages.length) {
+        pages[currentPage].classList.add('flipped');
+        currentPage++;
+        prevBtn.disabled = false;
+        if (currentPage === pages.length) nextBtn.disabled = true;
+    }
+});
+
+prevBtn.addEventListener('click', () => {
+    if (currentPage > 0) {
+        currentPage--;
+        pages[currentPage].classList.remove('flipped');
+        nextBtn.disabled = false;
+        if (currentPage === 0) prevBtn.disabled = true;
+    }
+});
+</script>
+
+</body>
+</html>
