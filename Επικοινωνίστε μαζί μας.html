@@ -18,43 +18,50 @@
 
         /* Navigation */
         .main-nav {
-            list-style: none; margin: 0; padding: 0;
-            background-color: #ffffffd2; 
-            display: flex; justify-content: center; align-items: center;
-            height: 100px; gap: 20px;
-            position: sticky; top: 0; z-index: 50; 
-            color: #097a41d8; font-weight: bold; font-size: 17px;
-            text-align: center; box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            background-color: rgba(255, 255, 255, 0.95);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 100px;
+            padding: 0 30px;
+            position: sticky; 
+            top: 0; width: 100%;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            box-sizing: border-box;
         }
 
-        .main-nav li { position: relative; }
-        .main-nav li:first-child { position: absolute; left: 20px; }
-
-        .main-nav li a {
-            display: flex; align-items: center; justify-content: center;
-            min-width: 110px; height: 50px; color: #097a41d8; 
-            padding: 0 16px; font-weight: bold; text-decoration: none;
-            border-radius: 7px; transition: 0.3s;
-        }
-        .main-nav li a:hover { color:#065e32; transform: translateY(-2px); }
-
-        .logo-link { display: flex; align-items: center; height: 100px; text-decoration: none; }
-        .logo-text-group { display: flex; flex-direction: column; margin-left: 10px; text-align: left; }
+        .logo-link { display: flex; align-items: center; text-decoration: none; }
+        .logo-text-group { display: flex; flex-direction: column; text-align: left; }
         .logo-text { font-family: 'Trebuchet MS', sans-serif; font-size: 38px; font-weight: 700; color: #087a41; line-height: 1; }
         .logo-textq { font-family: 'Trebuchet MS', sans-serif; font-size: 14px; color: #065e32; margin-top: 3px; letter-spacing: 1px; }
 
-        /* Dropdown */
-        .dropdown span { cursor: pointer; display: flex; align-items: center; height: 50px; width: 110px; justify-content: center; color: #097a41d8; }
-        .arrow { transition: 0.5s; margin-left: 5px; color: #065e32; }
-        .dropdown.active .arrow { transform: rotate(180deg); }
-        .dropdown-content {
-            opacity: 0; visibility: hidden; position: absolute; top: 100%;
-            background-color: #f9f9f9; min-width: 150px; box-shadow: 0 8px 16px rgba(0,0,0,0.1);
-            border-radius: 5px; transform: perspective(1000px) rotateX(-90deg);
-            transform-origin: top; transition: 0.5s;
+        /* Hamburger Toggle */
+        .nav-toggle {
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
         }
-        .dropdown.active .dropdown-content { opacity: 1; visibility: visible; transform: perspective(1000px) rotateX(0deg); }
-        .dropdown-content a { display: block; padding: 12px; color: #097a41d8; text-decoration: none; font-size: 15px; border-bottom: 1px solid #eee; text-align: center; }
+        .nav-toggle div {
+            width: 30px; height: 4px; background-color: #065e32; border-radius: 25px; transition: 0.4s;
+        }
+
+        /* Πράσινο See-through Μενού */
+        .mobile-menu {
+            position: fixed; top: 0; right: -100%; width: 100%; height: 100vh;
+            background: rgba(8, 122, 65, 0.96); 
+            backdrop-filter: blur(-30px);
+            display: flex; flex-direction: column;
+            align-items: center; justify-content: center;
+            transition: 0.5s ease-in-out; z-index: 2000;
+        }
+        .mobile-menu.active { right: 0; }
+        .mobile-menu a {
+            font-size: 28px; color: white; text-decoration: none;
+            margin: 15px 0; font-weight: bold; font-family: 'Playfair Display', serif;
+        }
+        .close-menu { position: absolute; top: 30px; right: 30px; font-size: 45px; color: white; cursor: pointer; }
 
         /* Contact Section */
         .contact-container {
@@ -155,21 +162,7 @@
             font-weight: bold;
         }
 
-        /* Mobile Adjustments */
-        .nav-toggle { display: none; width: 30px; position: fixed; right: 20px; top: 35px; z-index: 100; cursor: pointer; }
-        .nav-toggle div { height: 4px; background-color: #065e32; margin: 6px 0; border-radius: 25px; transition: 0.4s; }
-
         @media (max-width: 768px) {
-            .nav-toggle { display: block; }
-            .main-nav { 
-                flex-direction: column; 
-                height: auto; 
-                padding: 20px 0; 
-                display: none; 
-                background-color: #fff;
-            }
-            .main-nav.mobile-active { display: flex; }
-            .main-nav li:first-child { position: static; margin-bottom: 20px; }
             .contact-grid { grid-template-columns: 1fr; }
             .logo-text { font-size: 28px; }
         }
@@ -177,110 +170,90 @@
 </head>
 <body>
 
-<div class="nav-toggle" id="nav-toggle">
-    <div></div><div></div><div></div>
-</div>
-
-<ul class="main-nav" id="main-menu">
-    <li>
+    <nav class="main-nav">
         <a href="Αρχική σελίδα.html" class="logo-link">
             <div class="logo-text-group">
                 <span class="logo-text">Κονσέρβα</span>
                 <span class="logo-textq">παραδοσιακό καφενείο</span>
             </div>
         </a>
-    </li>
-    <li><a href="Αρχική σελίδα.html">Home</a></li>
-    <li class="dropdown" id="menu-dropdown">
-        <span>Menu <span class="arrow">▼</span></span>
-        <div class="dropdown-content">
-            <a href="menu.html">Menu Gr</a>
-            <a href="menu en.html">Menu En</a>
+        <div class="nav-toggle" id="nav-toggle">
+            <div></div><div></div><div></div>
         </div>
-    </li>
-    <li><a href="Επικοινωνίστε μαζί μας.html">Επικοινωνία</a></li>
-    <li><a href="Σχετικά με εμας.html">Σχετικά με εμάς</a></li>
-</ul>
+    </nav>
 
-<div class="contact-container">
-    <div class="contact-header">
-        <h1>Ελάτε να σας γνωρίσουμε</h1>
-        <p>Σας περιμένουμε για καφέ, μεζέδες και ωραίες ιστορίες.</p>
+    <div class="mobile-menu" id="mobile-menu">
+        <div class="close-menu" id="close-menu">×</div>
+        <a href="Αρχική σελίδα.html">Home</a>
+        <a href="menu.html">Menu Gr</a>
+        <a href="menu en.html">Menu En</a>
+        <a href="Επικοινωνίστε μαζί μας.html">Επικοινωνία</a>
+        <a href="Σχετικά με εμας.html">Σχετικά με εμάς</a>
     </div>
 
-    <div class="contact-grid">
-        <a href="https://www.instagram.com/konserva_paradosiakokafeneio" class="contact-card" target="_blank">
-            <i class="fa fa-instagram"></i>
-            <h3>Instagram</h3>
-            <p>@konserva_paradosiakokafeneio</p>
-        </a>
+    <div class="contact-container">
+        <div class="contact-header">
+            <h1>Ελάτε να σας γνωρίσουμε</h1>
+            <p>Σας περιμένουμε για καφέ, μεζέδες και ωραίες ιστορίες.</p>
+        </div>
 
-        <a href="tel:+306977125283" class="contact-card">
-            <i class="fa fa-phone"></i>
-            <h3>Τηλέφωνο</h3>
-            <p>697 712 5283</p>
-        </a>
+        <div class="contact-grid">
+            <a href="https://www.instagram.com/konserva_paradosiakokafeneio" class="contact-card" target="_blank">
+                <i class="fa fa-instagram"></i>
+                <h3>Instagram</h3>
+                <p>@konserva_paradosiakokafeneio</p>
+            </a>
 
-<a href="https://www.google.com/maps/search/?api=1&query=Κονσέρβα+-+Παραδοσιακό+Καφενείο&query_place_id=ChIJJ00IewCFpxQR-W8TJODfY48" class="contact-card" target="_blank">
-    <i class="fa fa-map-marker"></i>
-    <h3>Που βρισκόμαστε</h3>
-    <p>Μεγαλόβρυσο Αγιάς, 400 03</p>
-</a>
+            <a href="tel:+306977125283" class="contact-card">
+                <i class="fa fa-phone"></i>
+                <h3>Τηλέφωνο</h3>
+                <p>697 712 5283</p>
+            </a>
+
+            <a href="https://www.google.com/maps/search/?api=1&query=Κονσέρβα+-+Παραδοσιακό+Καφενείο&query_place_id=ChIJJ00IewCFpxQR-W8TJODfY48" class="contact-card" target="_blank">
+                <i class="fa fa-map-marker"></i>
+                <h3>Που βρισκόμαστε</h3>
+                <p>Μεγαλόβρυσο Αγιάς, 400 03</p>
+            </a>
+        </div>
+
+        <div class="map-section">
+            <iframe 
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3056.326233488258!2d22.748530076545196!3d39.73789499623862!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x135901007b084d27%3A0x8f63df0824136f19!2zzprOn86dzqPOlc6hzpLOkSAtIM6gzrHPgc6xzrTOv8-DzrnOsc66z4wgzrrOsc-GzrXOvc61zq_Ovw!5e0!3m2!1sel!2sgr!4v1700000000000!5m2!1sel!2sgr" 
+                width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
+            </iframe>
+        </div>
     </div>
 
-    <div class="map-section">
-     <div class="map-section">
-<iframe 
-    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3056.326233488258!2d22.748530076545196!3d39.73789499623862!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x135901007b084d27%3A0x8f63df0824136f19!2zzprOn86dzqPOlc6hzpLOkSAtIM6gzrHPgc6xzrTOv8-DzrnOsc66z4wgzrrOsc-GzrXOvc61zq_Ovw!5e0!3m2!1sel!2sgr!4v1700000000000!5m2!1sel!2sgr" 
-    width="100%" 
-    height="100%" 
-    style="border:0;" 
-    allowfullscreen="" 
-    loading="lazy" 
-    referrerpolicy="no-referrer-when-downgrade">
-</iframe>
-</div>
-    </div>
-</div>
+    <footer class="info-footer">
+        <div class="footer-container">
+            <h4>Ωράριο Λειτουργίας</h4>
+            <table class="schedule-table">
+                <tr><td>Δευτέρα - Τρίτη</td><td>Κλειστά</td></tr>
+                <tr><td>Τετάρτη - Πέμπτη</td><td>Κλειστά (Λόγω Εορτών)</td></tr>
+                <tr><td>Παρασκευή</td><td>17:00 – 02:00</td></tr>
+                <tr><td>Σάββατο</td><td>10:00 – 02:00</td></tr>
+                <tr><td>Κυριακή</td><td>10:00 – 21:00</td></tr>
+            </table>
 
-<footer class="info-footer">
-    <div class="footer-container">
-        <h4>Ωράριο Λειτουργίας</h4>
+            <div class="footer-note">
+                <p>* Το ωράριο ενδέχεται να τροποποιηθεί τις ημέρες των εορτών.</p>
+                <p>© 2025 Κονσέρβα Παραδοσιακό Καφενείο. <br> Μεγαλόβρυσο Αγιάς, Λάρισα, Τ.Κ. 400 03</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const toggle = document.getElementById('nav-toggle');
+        const menu = document.getElementById('mobile-menu');
+        const close = document.getElementById('close-menu');
+
+        toggle.addEventListener('click', () => menu.classList.add('active'));
+        close.addEventListener('click', () => menu.classList.remove('active'));
         
-        <table class="schedule-table">
-            <tr><td>Δευτέρα - Τρίτη</td><td>Κλειστά</td></tr>
-            <tr><td>Τετάρτη - Πέμπτη</td><td>Κλειστά (Λόγω Εορτών)</td></tr>
-            <tr><td>Παρασκευή</td><td>17:00 – 02:00</td></tr>
-            <tr><td>Σάββατο</td><td>10:00 – 02:00</td></tr>
-            <tr><td>Κυριακή</td><td>10:00 – 21:00</td></tr>
-        </table>
-
-        <div class="footer-note">
-            <p>* Το ωράριο ενδέχεται να τροποποιηθεί τις ημέρες των εορτών.</p>
-            <p>© 2025 Κονσέρβα Παραδοσιακό Καφενείο. <br> Μεγαλόβρυσο Αγιάς, Λάρισα, Τ.Κ. 400 03</p>
-        </div>
-    </div>
-</footer>
-
-<script>
-    // Dropdown Logic
-    const dropdown = document.getElementById('menu-dropdown');
-    dropdown.querySelector('span').addEventListener('click', (e) => {
-        e.stopPropagation();
-        dropdown.classList.toggle('active');
-    });
-
-    // Mobile Menu Toggle
-    const navToggle = document.getElementById('nav-toggle');
-    const mainMenu = document.getElementById('main-menu');
-    navToggle.addEventListener('click', () => {
-        mainMenu.classList.toggle('mobile-active');
-    });
-
-    // Close dropdown on outside click
-    window.addEventListener('click', () => {
-        dropdown.classList.remove('active');
-    });
-</script>
-
+        document.querySelectorAll('.mobile-menu a').forEach(link => {
+            link.addEventListener('click', () => menu.classList.remove('active'));
+        });
+    </script>
 </body>
+</html>
