@@ -2,7 +2,7 @@
 <html lang="el">
 <head>
 <meta charset="UTF-8">
-<title>Κονσέρβα παραδοσιακό καφενείο</title>
+<title>Κονσέρβα παραδοσιακό καφενείο - Menu</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&display=swap" rel="stylesheet"> 
@@ -16,49 +16,54 @@ body {
     padding-top: 110px; 
 }
 
+/* --- NEW NAVIGATION & HAMBURGER --- */
 .main-nav {
-    list-style: none; margin: 0; padding: 0;
-    background-color: #ffffffd2; 
-    display: flex; justify-content: center; align-items: center;
-    height: 100px; gap: 20px;
-    position: fixed; top: 0; left: 0; width: 100%; z-index: 1000; 
-    color: #097a41d8; font-weight: bold; font-size: 17px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    background-color: rgba(255, 255, 255, 0.95);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 100px;
+    padding: 0 30px;
+    position: fixed; 
+    top: 0; left: 0; width: 100%;
+    z-index: 1000;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    box-sizing: border-box;
 }
 
-.main-nav li { position: relative; }
-.main-nav li:first-child { position: absolute; left: 20px; }
-
-.main-nav li a {
-    display: flex; align-items: center; justify-content: center;
-    width: 110px; height: 50px; color: #097a41d8; 
-    padding: 0 16px; font-weight: bold; text-decoration: none;
-    border-radius: 7px; cursor: pointer; transition: 0.3s; font-size: 17px;
-}
-
-.main-nav li a:hover { font-size: 18px; color:#065e32; }
-.logo-text:hover{
-    transition: 0.15s;
-    font-size: 40px;
-    color:#065f33;
-}
-.logo-text-group { display: flex; flex-direction: column; justify-content: center; align-items: flex-start; margin-left: 10px; }
-.logo-text { transition: 0.15s; font-family: 'Trebuchet MS', sans-serif; font-size: 38px; font-weight: 700; color: #087a41; line-height: 1; }
+.logo-link { display: flex; align-items: center; text-decoration: none; }
+.logo-text-group { display: flex; flex-direction: column; text-align: left; }
+.logo-text { font-family: 'Trebuchet MS', sans-serif; font-size: 38px; font-weight: 700; color: #087a41; line-height: 1; transition: 0.15s; }
 .logo-textq { font-family: 'Trebuchet MS', sans-serif; font-size: 14px; color: #065e32; margin-top: 3px; }
 
-.dropdown span { font-size: 16px; height: 50px; width: 110px; display: flex; justify-content: center; align-items: center; cursor: pointer; }
-.arrow { display: inline-block; color: #065e32; transition: 0.5s ease; margin-left: 5px; }
-.dropdown.active .arrow { transform: rotate(180deg); }
-.dropdown-content {
-    opacity: 0; visibility: hidden; position: absolute; top: 100%;
-    background-color: #f9f9f9; min-width: 110px; box-shadow: 0px 8px 16px rgba(0,0,0,0.2); 
-    z-index: 60; border-radius: 5px; transform-origin: top;
-    transform: perspective(1000px) rotateX(-90deg); transition: 0.5s;
+.logo-text:hover { font-size: 40px; color:#065f33; }
+
+.nav-toggle {
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
 }
-.dropdown.active .dropdown-content { opacity: 1; visibility: visible; transform: perspective(1000px) rotateX(0deg); }
-.dropdown-content a { display: block; padding: 8px 12px; font-size: 14px; color: #097a41d8; text-decoration: none; }
+.nav-toggle div {
+    width: 30px; height: 4px; background-color: #065e32; border-radius: 25px; transition: 0.4s;
+}
 
+.mobile-menu {
+    position: fixed; top: 0; right: -100%; width: 100%; height: 100vh;
+    background: rgba(8, 122, 65, 0.96); 
+    backdrop-filter: blur(10px);
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    transition: 0.5s ease-in-out; z-index: 2000;
+}
+.mobile-menu.active { right: 0; }
+.mobile-menu a {
+    font-size: 28px; color: white; text-decoration: none;
+    margin: 15px 0; font-weight: bold; font-family: 'Playfair Display', serif;
+}
+.close-menu { position: absolute; top: 30px; right: 30px; font-size: 45px; color: white; cursor: pointer; }
 
+/* --- BOOK CONTAINER (UNTOUCHED) --- */
 .book-container {
     position: relative;
     width: 480px;
@@ -118,27 +123,26 @@ h2 {
 </head>
 <body>
 
-<ul class="main-nav">
-    <li>
-        <a href="Αρχική σελίδα.html" class="logo-link">
-            <div class="logo-text-group">
-                <span class="logo-text">Κονσέρβα</span>
-                <span class="logo-textq">παραδοσιακό καφενείο</span>
-            </div>
-        </a>
-    </li>
-    <li><a href="Αρχική σελίδα.html">Home</a></li>
-    <li class="dropdown" id="menu-dropdown">
-        <span>Menu <span class="arrow">▼</span></span>
-        <div class="dropdown-content">
-            <a href="menu.html">Menu Gr</a>
-            <a href="menu en.html">Menu En</a>
-          
+<nav class="main-nav">
+    <a href="Αρχική σελίδα.html" class="logo-link">
+        <div class="logo-text-group">
+            <span class="logo-text">Κονσέρβα</span>
+            <span class="logo-textq">παραδοσιακό καφενείο</span>
         </div>
-    </li>
-    <li><a href="Επικοινωνίστε μαζί μας.html">Επικοινωνία</a></li>
-    <li><a href="Σχετικά με εμας.html">Σχετικά με εμάς</a></li>
-</ul>
+    </a>
+    <div class="nav-toggle" id="nav-toggle">
+        <div></div><div></div><div></div>
+    </div>
+</nav>
+
+<div class="mobile-menu" id="mobile-menu">
+    <div class="close-menu" id="close-menu">×</div>
+    <a href="Αρχική σελίδα.html">Home</a>
+    <a href="menu.html">Menu Gr</a>
+    <a href="menu en.html">Menu En</a>
+    <a href="Επικοινωνίστε μαζί μας.html">Επικοινωνία</a>
+    <a href="Σχετικά με εμας.html">Σχετικά με εμάς</a>
+</div>
 
 <div class="book-container">
   <div class="book">
@@ -228,11 +232,15 @@ h2 {
 </div>
 
 <script>
-const dropdown = document.getElementById('menu-dropdown');
-const dropdownBtn = dropdown.querySelector('span');
-dropdownBtn.addEventListener('click', (e) => { e.stopPropagation(); dropdown.classList.toggle('active'); });
-window.addEventListener('click', () => dropdown.classList.remove('active'));
+// Toggle Logic
+const toggle = document.getElementById('nav-toggle');
+const menu = document.getElementById('mobile-menu');
+const close = document.getElementById('close-menu');
 
+toggle.addEventListener('click', () => menu.classList.add('active'));
+close.addEventListener('click', () => menu.classList.remove('active'));
+
+// Book Logic
 const nextBtn = document.getElementById('next-btn');
 const prevBtn = document.getElementById('prev-btn');
 const pages = [document.getElementById('cover'), document.getElementById('page1'), document.getElementById('page2')];
