@@ -1,176 +1,187 @@
 <!DOCTYPE html>
 <html lang="el">
 <head>
-<meta charset="UTF-8">
-<title>Κονσέρβα - Επικοινωνία</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&display=swap" rel="stylesheet"> 
+    <meta charset="UTF-8">
+    <title>Κονσέρβα - Επικοινωνία</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&display=swap" rel="stylesheet"> 
 
-<style>
+    <style>
+        body {
+            margin: 0;
+            background-color: white;
+            font-family: Georgia, 'Times New Roman', Times, serif;
+            color: #333;
+            line-height: 1.6;
+        }
 
-body {
-    margin: 0;
-    background-color: white;
-    font-family: Georgia, 'Times New Roman', Times, serif;
-    color: #333;
-    line-height: 1.6;
-}
+        /* Navigation */
+        .main-nav {
+            list-style: none; margin: 0; padding: 0;
+            background-color: #ffffffd2; 
+            display: flex; justify-content: center; align-items: center;
+            height: 100px; gap: 20px;
+            position: sticky; top: 0; z-index: 50; 
+            color: #097a41d8; font-weight: bold; font-size: 17px;
+            text-align: center; box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
 
+        .main-nav li { position: relative; }
+        .main-nav li:first-child { position: absolute; left: 20px; }
 
-.main-nav {
-    list-style: none; margin: 0; padding: 0;
-    background-color: #ffffffd2; 
-    display: flex; justify-content: center; align-items: center;
-    height: 100px; gap: 20px;
-    position: sticky; top: 0; z-index: 50; 
-    color: #097a41d8; font-weight: bold; font-size: 17px;
-    text-align: center; box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-}
+        .main-nav li a {
+            display: flex; align-items: center; justify-content: center;
+            min-width: 110px; height: 50px; color: #097a41d8; 
+            padding: 0 16px; font-weight: bold; text-decoration: none;
+            border-radius: 7px; transition: 0.3s;
+        }
+        .main-nav li a:hover { color:#065e32; transform: translateY(-2px); }
 
-.main-nav li { position: relative; }
-.main-nav li:first-child { position: absolute; left: 20px; }
+        .logo-link { display: flex; align-items: center; height: 100px; text-decoration: none; }
+        .logo-text-group { display: flex; flex-direction: column; margin-left: 10px; text-align: left; }
+        .logo-text { font-family: 'Trebuchet MS', sans-serif; font-size: 38px; font-weight: 700; color: #087a41; line-height: 1; }
+        .logo-textq { font-family: 'Trebuchet MS', sans-serif; font-size: 14px; color: #065e32; margin-top: 3px; letter-spacing: 1px; }
 
-.main-nav li a {
-    display: flex; align-items: center; justify-content: center;
-    min-width: 110px; height: 50px; color: #097a41d8; 
-    padding: 0 16px; font-weight: bold; text-decoration: none;
-    border-radius: 7px; transition: 0.3s;
-}
-.main-nav li a:hover { color:#065e32; transform: translateY(-2px); }
+        /* Dropdown */
+        .dropdown span { cursor: pointer; display: flex; align-items: center; height: 50px; width: 110px; justify-content: center; color: #097a41d8; }
+        .arrow { transition: 0.5s; margin-left: 5px; color: #065e32; }
+        .dropdown.active .arrow { transform: rotate(180deg); }
+        .dropdown-content {
+            opacity: 0; visibility: hidden; position: absolute; top: 100%;
+            background-color: #f9f9f9; min-width: 150px; box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+            border-radius: 5px; transform: perspective(1000px) rotateX(-90deg);
+            transform-origin: top; transition: 0.5s;
+        }
+        .dropdown.active .dropdown-content { opacity: 1; visibility: visible; transform: perspective(1000px) rotateX(0deg); }
+        .dropdown-content a { display: block; padding: 12px; color: #097a41d8; text-decoration: none; font-size: 15px; border-bottom: 1px solid #eee; text-align: center; }
 
-.logo-link { display: flex; align-items: center; height: 100px; text-decoration: none; }
-.logo-text-group { display: flex; flex-direction: column; margin-left: 10px; text-align: left; }
-.logo-text { font-family: 'Trebuchet MS', sans-serif; font-size: 38px; font-weight: 700; color: #087a41; line-height: 1; }
-.logo-textq { font-family: 'Trebuchet MS', sans-serif; font-size: 14px; color: #065e32; margin-top: 3px; letter-spacing: 1px; }
+        /* Contact Section */
+        .contact-container {
+            max-width: 1000px;
+            margin: 50px auto;
+            padding: 20px;
+            text-align: center;
+        }
 
+        .contact-header h1 {
+            font-family: 'Playfair Display', serif;
+            color: #087a41;
+            font-size: 38px;
+            margin-bottom: 10px;
+        }
 
-.dropdown span { cursor: pointer; display: flex; align-items: center; height: 50px; width: 110px; justify-content: center; color: #097a41d8; }
-.arrow { transition: 0.5s; margin-left: 5px; color: #065e32; }
-.dropdown.active .arrow { transform: rotate(180deg); }
-.dropdown-content {
-    opacity: 0; visibility: hidden; position: absolute; top: 100%;
-    background-color: #f9f9f9; min-width: 150px; box-shadow: 0 8px 16px rgba(0,0,0,0.1);
-    border-radius: 5px; transform: perspective(1000px) rotateX(-90deg);
-    transform-origin: top; transition: 0.5s;
-}
-.dropdown.active .dropdown-content { opacity: 1; visibility: visible; transform: perspective(1000px) rotateX(0deg); }
-.dropdown-content a { display: block; padding: 12px; color: #097a41d8; text-decoration: none; font-size: 15px; border-bottom: 1px solid #eee; text-align: center; }
+        .contact-header p {
+            color: #666;
+            margin-bottom: 40px;
+            font-size: 18px;
+        }
 
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin-bottom: 50px;
+        }
 
-.contact-container {
-    max-width: 1000px;
-    margin: 50px auto;
-    padding: 20px;
-    text-align: center;
-}
+        .contact-card {
+            padding: 30px;
+            border-radius: 15px;
+            background: #fdfdfd;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            transition: 0.3s;
+            text-decoration: none;
+            color: inherit;
+            border: 1px solid #f0f0f0;
+        }
 
-.contact-header h1 {
-    font-family: 'Playfair Display', serif;
-    color: #087a41;
-    font-size: 38px;
-    margin-bottom: 10px;
-}
+        .contact-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 25px rgba(8, 122, 65, 0.1);
+            border-color: #087a41;
+        }
 
-.contact-header p {
-    color: #666;
-    margin-bottom: 40px;
-    font-size: 18px;
-}
+        .contact-card i {
+            font-size: 40px;
+            color: #087a41;
+            margin-bottom: 15px;
+        }
 
-.contact-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 30px;
-    margin-bottom: 50px;
-}
+        .contact-card h3 {
+            margin: 10px 0;
+            font-size: 18px;
+            color: #333;
+        }
 
-.contact-card {
-    padding: 30px;
-    border-radius: 15px;
-    background: #fdfdfd;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-    transition: 0.3s;
-    text-decoration: none;
-    color: inherit;
-    border: 1px solid #f0f0f0;
-}
+        /* Map Section */
+        .map-section {
+            width: 100%;
+            height: 450px;
+            border-radius: 15px;
+            overflow: hidden;
+            margin-top: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
 
-.contact-card:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 10px 25px rgba(8, 122, 65, 0.1);
-    border-color: #087a41;
-}
+        /* Footer */
+        .info-footer {
+            background: #087a41;
+            color: white;
+            padding: 60px 20px;
+            margin-top: 60px;
+            text-align: center;
+        }
 
-.contact-card i {
-    font-size: 40px;
-    color: #087a41;
-    margin-bottom: 15px;
-}
+        .footer-container {
+            max-width: 500px;
+            margin: 0 auto;
+        }
 
-.contact-card h3 {
-    margin: 10px 0;
-    font-size: 18px;
-    color: #333;
-}
+        .schedule-table {
+            width: 100%;
+            margin: 20px 0;
+            border-collapse: collapse;
+            font-size: 16px;
+        }
 
+        .schedule-table td {
+            padding: 10px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            text-align: left;
+        }
 
-.map-section {
-    width: 100%;
-    height: 400px;
-    border-radius: 15px;
-    overflow: hidden;
-    margin-top: 20px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-}
+        .schedule-table td:last-child {
+            text-align: right;
+            font-weight: bold;
+        }
 
+        /* Mobile Adjustments */
+        .nav-toggle { display: none; width: 30px; position: fixed; right: 20px; top: 35px; z-index: 100; cursor: pointer; }
+        .nav-toggle div { height: 4px; background-color: #065e32; margin: 6px 0; border-radius: 25px; transition: 0.4s; }
 
-.info-footer {
-    background: #087a41;
-    color: white;
-    padding: 60px 20px;
-    margin-top: 60px;
-    text-align: center;
-}
-
-.footer-container {
-    max-width: 500px;
-    margin: 0 auto;
-}
-
-.schedule-table {
-    width: 100%;
-    margin: 20px 0;
-    border-collapse: collapse;
-    font-size: 16px;
-}
-
-.schedule-table td {
-    padding: 10px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-    text-align: left;
-}
-
-.schedule-table td:last-child {
-    text-align: right;
-    font-weight: bold;
-}
-
-
-.nav-toggle { display: none; width: 30px; position: fixed; right: 20px; top: 35px; z-index: 100; cursor: pointer; }
-.nav-toggle div { height: 4px; background-color: #065e32; margin: 6px 0; border-radius: 25px; transition: 0.4s; }
-
-@media (max-width: 768px) {
-    .nav-toggle { display: block; }
-    .main-nav li:not(:first-child) { display: none; }
-    .contact-grid { grid-template-columns: 1fr; }
-    .logo-text { font-size: 28px; }
-}
-</style>
+        @media (max-width: 768px) {
+            .nav-toggle { display: block; }
+            .main-nav { 
+                flex-direction: column; 
+                height: auto; 
+                padding: 20px 0; 
+                display: none; 
+                background-color: #fff;
+            }
+            .main-nav.mobile-active { display: flex; }
+            .main-nav li:first-child { position: static; margin-bottom: 20px; }
+            .contact-grid { grid-template-columns: 1fr; }
+            .logo-text { font-size: 28px; }
+        }
+    </style>
 </head>
 <body>
 
-<ul class="main-nav">
+<div class="nav-toggle" id="nav-toggle">
+    <div></div><div></div><div></div>
+</div>
+
+<ul class="main-nav" id="main-menu">
     <li>
         <a href="Αρχική σελίδα.html" class="logo-link">
             <div class="logo-text-group">
@@ -185,16 +196,11 @@ body {
         <div class="dropdown-content">
             <a href="menu.html">Menu Gr</a>
             <a href="menu en.html">Menu En</a>
-           
         </div>
     </li>
     <li><a href="Επικοινωνίστε μαζί μας.html">Επικοινωνία</a></li>
     <li><a href="Σχετικά με εμας.html">Σχετικά με εμάς</a></li>
 </ul>
-
-<div class="nav-toggle" id="nav-toggle">
-    <div></div><div></div><div></div>
-</div>
 
 <div class="contact-container">
     <div class="contact-header">
@@ -215,18 +221,25 @@ body {
             <p>697 712 5283</p>
         </a>
 
-             <a href="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d3068.0831959239017!2d22.75397!3d39.737782!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14a785007b084d27%3A0x8f63dfe024136ff9!2zzprOv869z4POrc-BzrLOsSAtIM6gzrHPgc6xzrTOv8-DzrnOsc66z4wgzprOsc-GzrXOvc61zq_Ovw!5e0!3m2!1sel!2sus!4v1766497599374!5m2!1sel!2sus" class="contact-card" target="_blank">
-            <i class="fa fa-map-marker"></i>
-            <h3>Που βρισκόμαστε</h3>
-            <p>Μεγαλόβρυσο Αγιάς</p>
-        </a>
+<a href="https://www.google.com/maps/search/?api=1&query=Κονσέρβα+-+Παραδοσιακό+Καφενείο&query_place_id=ChIJJ00IewCFpxQR-W8TJODfY48" class="contact-card" target="_blank">
+    <i class="fa fa-map-marker"></i>
+    <h3>Που βρισκόμαστε</h3>
+    <p>Μεγαλόβρυσο Αγιάς, 400 03</p>
+</a>
     </div>
 
     <div class="map-section">
-        <iframe 
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3056.4172445839446!2d22.7235!3d39.7214!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMznCsDQzJzE3LjEiTiAyMsKwNDMnMjQuNiJF!5e0!3m2!1sel!2sgr!4v1700000000000" 
-            width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy">
-        </iframe>
+     <div class="map-section">
+<iframe 
+    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3056.326233488258!2d22.748530076545196!3d39.73789499623862!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x135901007b084d27%3A0x8f63df0824136f19!2zzprOn86dzqPOlc6hzpLOkSAtIM6gzrHPgc6xzrTOv8-DzrnOsc66z4wgzrrOsc-GzrXOvc61zq_Ovw!5e0!3m2!1sel!2sgr!4v1700000000000!5m2!1sel!2sgr" 
+    width="100%" 
+    height="100%" 
+    style="border:0;" 
+    allowfullscreen="" 
+    loading="lazy" 
+    referrerpolicy="no-referrer-when-downgrade">
+</iframe>
+</div>
     </div>
 </div>
 
@@ -235,50 +248,41 @@ body {
         <h4>Ωράριο Λειτουργίας</h4>
         
         <table class="schedule-table">
-            <tr>
-                <td>Δευτέρα - Τρίτη</td>
-                <td>Κλειστά</td>
-            </tr>
-            <tr>
-                <td>Τετάρτη - Πέμπτη</td>
-                <td>Κλειστά (Λόγω Εορτών)</td>
-            </tr>
-            <tr>
-                <td>Παρασκευή</td>
-                <td>17:00 – 02:00</td>
-            </tr>
-            <tr>
-                <td>Σάββατο</td>
-                <td>10:00 – 02:00</td>
-            </tr>
-            <tr>
-                <td>Κυριακή</td>
-                <td>10:00 – 21:00</td>
-            </tr>
+            <tr><td>Δευτέρα - Τρίτη</td><td>Κλειστά</td></tr>
+            <tr><td>Τετάρτη - Πέμπτη</td><td>Κλειστά (Λόγω Εορτών)</td></tr>
+            <tr><td>Παρασκευή</td><td>17:00 – 02:00</td></tr>
+            <tr><td>Σάββατο</td><td>10:00 – 02:00</td></tr>
+            <tr><td>Κυριακή</td><td>10:00 – 21:00</td></tr>
         </table>
 
         <div class="footer-note">
             <p>* Το ωράριο ενδέχεται να τροποποιηθεί τις ημέρες των εορτών.</p>
-            <p>© 2025 Κονσέρβα Παραδοσιακό Καφενείο. <br> Μεγαλόβρυσο Αγιάς, Λάρισα</p>
+            <p>© 2025 Κονσέρβα Παραδοσιακό Καφενείο. <br> Μεγαλόβρυσο Αγιάς, Λάρισα, Τ.Κ. 400 03</p>
         </div>
     </div>
 </footer>
 
 <script>
+    // Dropdown Logic
+    const dropdown = document.getElementById('menu-dropdown');
+    dropdown.querySelector('span').addEventListener('click', (e) => {
+        e.stopPropagation();
+        dropdown.classList.toggle('active');
+    });
 
-const dropdown = document.getElementById('menu-dropdown');
-dropdown.querySelector('span').addEventListener('click', (e) => {
-    e.stopPropagation();
-    dropdown.classList.toggle('active');
-});
-window.addEventListener('click', () => dropdown.classList.remove('active'));
+    // Mobile Menu Toggle
+    const navToggle = document.getElementById('nav-toggle');
+    const mainMenu = document.getElementById('main-menu');
+    navToggle.addEventListener('click', () => {
+        mainMenu.classList.toggle('mobile-active');
+    });
 
-
-document.getElementById('nav-toggle').addEventListener('click', function() {
-    alert("Το μενού για κινητά θα προστεθεί σύντομα!");
-});
+    // Close dropdown on outside click
+    window.addEventListener('click', () => {
+        dropdown.classList.remove('active');
+    });
 </script>
 
 </body>
-
 </html>
+
