@@ -8,7 +8,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
 
     <style>
-
         body {
             margin: 0;
             padding: 0;
@@ -18,6 +17,7 @@
             overflow-x: hidden;
         }
 
+        /* --- Navigation --- */
         .main-nav {
             list-style: none; margin: 0; padding: 0;
             background-color: #ffffffd2; 
@@ -26,6 +26,7 @@
             position: sticky; top: 0; z-index: 50; 
             color: #097a41d8; font-weight: bold; font-size: 17px;
             text-align: center; box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            transition: 0.3s ease;
         }
 
         .main-nav li { position: relative; }
@@ -44,10 +45,11 @@
         .logo-text { font-family: 'Trebuchet MS', sans-serif; font-size: 38px; font-weight: 700; color: #087a41; line-height: 1; }
         .logo-textq { font-family: 'Trebuchet MS', sans-serif; font-size: 14px; color: #065e32; margin-top: 3px; letter-spacing: 1px; }
 
-       
+        /* --- Dropdown --- */
         .dropdown span { cursor: pointer; display: flex; align-items: center; height: 50px; width: 110px; justify-content: center; color: #097a41d8; }
         .arrow { transition: 0.5s; margin-left: 5px; color: #065e32; }
         .dropdown.active .arrow { transform: rotate(180deg); }
+        
         .dropdown-content {
             opacity: 0; visibility: hidden; position: absolute; top: 100%;
             background-color: #f9f9f9; min-width: 150px; box-shadow: 0 8px 16px rgba(0,0,0,0.1);
@@ -57,7 +59,7 @@
         .dropdown.active .dropdown-content { opacity: 1; visibility: visible; transform: perspective(1000px) rotateX(0deg); }
         .dropdown-content a { display: block; padding: 12px; color: #097a41d8; text-decoration: none; font-size: 15px; border-bottom: 1px solid #eee; text-align: center; }
 
-  
+        /* --- Hero Section --- */
         .hero-about {
             height: 400px;
             background: linear-gradient(rgba(7, 100, 53, 0.4), rgba(7, 100, 53, 0.4)), url('no2.jpg');
@@ -77,6 +79,7 @@
             text-shadow: 2px 2px 15px rgba(0,0,0,0.6);
         }
 
+        /* --- Content Container --- */
         .container {
             max-width: 900px;
             margin: -50px auto 50px;
@@ -117,13 +120,69 @@
             text-align: center;
         }
 
-  
-        .nav-toggle { display: none; width: 30px; position: fixed; right: 20px; top: 35px; z-index: 100; cursor: pointer; }
-        .nav-toggle div { height: 4px; background-color: #065e32; margin: 6px 0; border-radius: 25px; transition: 0.4s; }
+        /* --- Mobile Styles & Hamburger --- */
+        .nav-toggle { 
+            display: none; 
+            width: 30px; 
+            position: fixed; 
+            right: 20px; 
+            top: 35px; 
+            z-index: 100; 
+            cursor: pointer; 
+        }
+        .nav-toggle div { 
+            height: 4px; 
+            background-color: #065e32; 
+            margin: 6px 0; 
+            border-radius: 25px; 
+            transition: 0.4s; 
+        }
 
         @media (max-width: 768px) {
             .nav-toggle { display: block; }
-            .main-nav li:not(:first-child) { display: none; }
+            
+            .main-nav {
+                flex-direction: column;
+                height: 0;
+                overflow: hidden;
+                background-color: white;
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                padding-top: 0;
+                transition: 0.5s ease;
+                justify-content: flex-start;
+            }
+
+            .main-nav.active {
+                height: 100vh;
+                padding-top: 120px;
+            }
+
+            .main-nav li:not(:first-child) { 
+                margin: 10px 0;
+            }
+
+            .main-nav li:first-child { 
+                position: absolute; 
+                top: 15px; 
+                left: 20px; 
+            }
+
+            .dropdown-content {
+                position: static;
+                transform: none;
+                box-shadow: none;
+                display: none;
+                opacity: 1;
+                visibility: visible;
+            }
+
+            .dropdown.active .dropdown-content {
+                display: block;
+            }
+
             .hero-about h1 { font-size: 2.5rem; }
             .about-card { padding: 30px 20px; }
             .logo-text { font-size: 28px; }
@@ -132,7 +191,13 @@
 </head>
 <body>
 
-    <ul class="main-nav">
+    <div class="nav-toggle" id="mobile-toggle">
+        <div></div>
+        <div></div>
+        <div></div>
+    </div>
+
+    <ul class="main-nav" id="nav-menu">
         <li>
             <a href="Αρχική σελίδα.html" class="logo-link">
                 <div class="logo-text-group">
@@ -141,22 +206,17 @@
                 </div>
             </a>
         </li>
-        <li><a href="Αρχική σελίδα.html">Home</a></li>
+        <li><a href="Αρχική σελίδα.html">Αρχική</a></li>
         <li class="dropdown" id="menu-dropdown">
             <span>Menu <span class="arrow">▼</span></span>
             <div class="dropdown-content">
-                <a href="menu.html">Menu Gr</a>
-                <a href="menu en.html">Menu En</a>
-            
+                <a href="#">Καφέδες</a>
+                <a href="#">Μεζέδες</a>
+                <a href="#">Ποτά</a>
             </div>
         </li>
-        <li><a href="Επικοινωνίστε μαζί μας.html">Επικοινωνία</a></li>
-        <li><a href="Σχετικά με εμας.html">Σχετικά με εμάς</a></li>
+        <li><a href="#">Επικοινωνία</a></li>
     </ul>
-
-    <div class="nav-toggle" id="nav-toggle">
-        <div></div><div></div><div></div>
-    </div>
 
     <section class="hero-about">
         <h1>Η Ιστορία μας</h1>
@@ -164,48 +224,40 @@
 
     <div class="container">
         <div class="about-card">
-            <h2>Η Αρχή μας</h2>
-            <p>
-                Το παραδοσιακό καφενείο <span class="highlight">"Κονσέρβα"</span> βρίσκεται στην καρδιά του Κισσάβου, στο όμορφο Μεγαλόβρυσο Αγιάς, σε υψόμετρο 700 μέτρων. 
-                Ανοίξαμε τις πόρτες μας στις <span class="highlight">15 Ιουνίου 2024</span>, με μια πολύ συγκεκριμένη αποστολή: 
-                να δώσουμε ξανά ζωή στην <strong>παλιά αγορά</strong> του χωριού μας.
-            </p>
-            <p>
-                Εκεί που κάποτε χτυπούσε η καρδιά της κοινότητας, δημιουργήσαμε έναν χώρο που συνδυάζει την παράδοση με τη φρεσκάδα του σήμερα. 
-                Ήταν ένα όνειρο που χτίστηκε με προσωπικό μεράκι και αγάπη για τον τόπο μας.
-            </p>
-
-            <h2>Το Όραμά μας</h2>
-            <p>
-                Για εμάς, η Κονσέρβα δεν είναι απλά μια επιχείρηση. Είναι το <strong>στέκι</strong>. 
-                Θέλουμε κάθε επισκέπτης, είτε είναι μόνιμος κάτοικος είτε εκδρομέας, να νιώθει τη ζεστασιά της φιλοξενίας μας. 
-                Στόχος μας είναι να προσφέρουμε ποιοτικό καφέ, εκλεκτά τοπικά προϊόντα και, πάνω απ' όλα, έναν χώρο όπου οι άνθρωποι συνδέονται ξανά.
-            </p>
-
-            <h2>Ένα Ταξίδι που Συνεχίζεται</h2>
-            <p>
-                Στον πρώτο μας χρόνο λειτουργίας, η αγκαλιά του κόσμου ήταν συγκινητική. Μάθαμε, εξελιχθήκαμε και δημιουργήσαμε φιλίες που θα κρατήσουν χρόνια. 
-                Συνεχίζουμε με την ίδια ενέργεια, έτοιμοι να σας υποδεχτούμε στην πλατεία μας για έναν ελληνικό στη χόβολη ή ένα ποτήρι κρασί από την ενημερωμένη μας κάβα.
-            </p>
+            <h2>Ποιοι Είμαστε</h2>
+            <p>Καλώς ήρθατε στην <span class="highlight">Κονσέρβα</span>, ένα παραδοσιακό καφενείο στην καρδιά της πόλης, όπου η παράδοση συναντά τη σύγχρονη φιλοξενία. Ο χώρος μας δημιουργήθηκε με αγάπη για τις παλιές γειτονιές και την ανάγκη για έναν αληθινό τόπο συνάντησης.</p>
+            
+            <h2>Η Φιλοσοφία μας</h2>
+            <p>Πιστεύουμε στην αξία της απλότητας. Σερβίρουμε αυθεντικό ελληνικό καφέ στη χόβολη, εκλεκτούς τοπικούς μεζέδες και αποστάγματα από μικρούς παραγωγούς. Εδώ, ο χρόνος σταματά για να απολαύσετε την παρέα και τις γεύσεις που θυμίζουν σπίτι.</p>
         </div>
     </div>
 
     <footer>
-        <p>© 2025 Κονσέρβα Παραδοσιακό Καφενείο. <br> Μεγαλόβρυσο Αγιάς, Λάρισα</p>
+        <p>© 2024 Κονσέρβα Παραδοσιακό Καφενείο. Με επιφύλαξη παντός δικαιώματος.</p>
     </footer>
 
     <script>
+        const mobileToggle = document.getElementById('mobile-toggle');
+        const navMenu = document.getElementById('nav-menu');
+        const menuDropdown = document.getElementById('menu-dropdown');
 
-        const dropdown = document.getElementById('menu-dropdown');
-        dropdown.querySelector('span').addEventListener('click', (e) => {
-            e.stopPropagation();
-            dropdown.classList.toggle('active');
+        // Toggle the mobile navigation overlay
+        mobileToggle.addEventListener('click', () => {
+            navMenu.classList.toggle('active');
+            
+            // Optional: Animation for hamburger icon lines
+            const lines = mobileToggle.querySelectorAll('div');
+            lines[0].style.transform = navMenu.classList.contains('active') ? 'rotate(45deg) translate(5px, 6px)' : 'none';
+            lines[1].style.opacity = navMenu.classList.contains('active') ? '0' : '1';
+            lines[2].style.transform = navMenu.classList.contains('active') ? 'rotate(-45deg) translate(7px, -8px)' : 'none';
         });
-        window.addEventListener('click', () => dropdown.classList.remove('active'));
 
- 
-        document.getElementById('nav-toggle').addEventListener('click', function() {
-            alert("Το μενού για κινητά ανοίγει!");
+        // Handle dropdown click on mobile
+        menuDropdown.addEventListener('click', (e) => {
+            // Only toggle if we are in mobile view
+            if (window.innerWidth <= 768) {
+                menuDropdown.classList.toggle('active');
+            }
         });
     </script>
 
